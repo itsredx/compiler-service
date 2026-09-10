@@ -20,7 +20,7 @@ RUN curl -fsSL https://ziglang.org/download/${ZIG_VERSION}/zig-linux-x86_64-${ZI
 WORKDIR /app
 
 # Install NPM dependencies
-COPY compiler-service/package*.json ./
+COPY package*.json ./
 RUN npm install --omit=dev
 
 # Copy compiler pipeline assets
@@ -29,7 +29,7 @@ COPY stage4/nizam.wasm ./stage4/
 COPY mantiq/runtime.c ./mantiq/
 COPY mantiq/libtree-sitter-mantiq.a ./mantiq/
 COPY mantiq/std/ ./mantiq/std/
-COPY compiler-service/server.js ./
+COPY server.js ./
 
 # Set environment
 ENV PORT=8080
