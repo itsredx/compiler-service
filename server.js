@@ -51,12 +51,8 @@ app.post("/compile", async (req, res) => {
   try {
     await fs.promises.writeFile(srcPath, code, "utf-8");
 
-    const nodeArgs = [
-      "--no-incremental-marking",
-      "--stack-size=16384",
-      "--max-old-space-size=384",
-      path.join(COMPILER_DIR, "nizam_wasi.js"),
-      path.join(COMPILER_DIR, "stage4/nizam.wasm"),
+    const nizamBin = process.env.NIZAM_BIN || (fs.existsSync("/usr/local/bin/nizam") ? "/usr/local/bin/nizam" : path.join(COMPILER_DIR, "bin/nizam"));
+    const compilerArgs = [
       "build",
       srcPath,
       "-o", outPath,
@@ -65,9 +61,9 @@ app.post("/compile", async (req, res) => {
     ];
 
     const { stdout, stderr } = await new Promise((resolve, reject) => {
-      execFile("node", nodeArgs, {
+      execFile(nizamBin, compilerArgs, {
         cwd: COMPILER_DIR,
-        timeout: 30000,
+        timeout: 20000,
         maxBuffer: 10 * 1024 * 1024
       }, (err, out, errOut) => {
         if (err) {

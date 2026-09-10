@@ -24,13 +24,16 @@ ENV ZIG_LOCAL_CACHE_DIR=/opt/zig_cache
 
 WORKDIR /app
 
+# Install native Nizam compiler binary and Tree-Sitter shared library
+COPY bin/nizam /usr/local/bin/nizam
+COPY bin/libtree-sitter-mantiq.so /usr/local/lib/libtree-sitter-mantiq.so
+RUN chmod +x /usr/local/bin/nizam && ldconfig
+
 # Install NPM dependencies
 COPY package*.json ./
 RUN npm install --omit=dev
 
-# Copy compiler pipeline assets
-COPY nizam_wasi.js ./
-COPY stage4/nizam.wasm ./stage4/
+# Copy compiler pipeline assets and runtime
 COPY mantiq/runtime.c ./mantiq/
 COPY mantiq/libtree-sitter-mantiq.a ./mantiq/
 COPY mantiq/std/ ./mantiq/std/
