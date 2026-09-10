@@ -3,13 +3,14 @@ FROM debian:bookworm-slim
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-# Install curl, archive tools, ca-certificates, and Node.js
+# Install curl, archive tools, ca-certificates, and Node.js 20 LTS
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl \
     xz-utils \
     ca-certificates \
-    nodejs \
-    npm \
+    gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && rm -rf /var/lib/apt/lists/*
 
 # Install Zig 0.12.0 (Pinned version matching Nizam compiler WASM target flags)
