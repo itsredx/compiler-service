@@ -1,0 +1,11 @@
+.git
+.gitignore
+*.md
+playground/
+mantiqz/
+stage3/
+*.bat
+*.ps1
+*.sh
+node_modules/
+npm-debug.log

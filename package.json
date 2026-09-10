@@ -1,0 +1,17 @@
+{
+  "name": "nizam-compiler-service",
+  "version": "0.1.0",
+  "description": "Google Cloud Run container compiler bridge for Nizam & Mantiq WebAssembly Studio",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.19.2"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "license": "MIT"
+}
