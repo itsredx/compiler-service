@@ -53,8 +53,8 @@ app.post("/compile", async (req, res) => {
 
     const nodeArgs = [
       "--no-incremental-marking",
-      "--stack-size=65536",
-      "--max-old-space-size=4096",
+      "--stack-size=16384",
+      "--max-old-space-size=384",
       path.join(COMPILER_DIR, "nizam_wasi.js"),
       path.join(COMPILER_DIR, "stage4/nizam.wasm"),
       "build",
@@ -96,6 +96,7 @@ app.post("/compile", async (req, res) => {
 
   } catch (error) {
     const rawOut = (error.stderr || error.stdout || error.err?.message || error.message || "").toString();
+    console.error("[COMPILER ERROR]", rawOut);
     res.status(200).json({
       success: false,
       lang: isMantiq ? "mantiq" : "nizam",
