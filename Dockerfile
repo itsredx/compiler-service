@@ -37,6 +37,8 @@ RUN npm install --omit=dev
 COPY mantiq/runtime.c ./mantiq/
 COPY mantiq/libtree-sitter-mantiq.a ./mantiq/
 COPY mantiq/std/ ./mantiq/std/
+COPY std/ ./std/
+RUN mkdir -p /usr/local/lib/mantiq && cp -r ./mantiq/std /usr/local/lib/mantiq/std
 COPY server.js ./
 
 # Pre-compile Zig WASI libc and runtime C objects into cache during build
