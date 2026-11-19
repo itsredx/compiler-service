@@ -36,6 +36,9 @@ RUN npm install --omit=dev
 # Copy compiler pipeline assets and runtime
 COPY mantiq/runtime.c ./mantiq/
 COPY mantiq/libtree-sitter-mantiq.a ./mantiq/
+# wasm32 link prefers the wasm-compiled tree-sitter archive (the native
+# .a/.so are foreign objects to wasm-ld)
+COPY mantiq/libtree-sitter-mantiq.wasm32.a ./mantiq/
 COPY mantiq/std/ ./mantiq/std/
 COPY std/ ./std/
 RUN mkdir -p /usr/local/lib/mantiq && cp -r ./mantiq/std /usr/local/lib/mantiq/std
